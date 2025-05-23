@@ -9,6 +9,8 @@ namespace SWE_PP_Bsp3_Polygon
         const float maxX = 1.1f;
         const float minY = -1.1f;
         const float maxY = 1.1f;
+
+        float width = 0.001f; 
         public Form1()
         {
             InitializeComponent();
@@ -47,7 +49,7 @@ namespace SWE_PP_Bsp3_Polygon
 
             z.Transform = myMatrix;  //Matrix anwenden
 
-            Pen p = new Pen(Color.Black, 0.01f);
+            Pen p = new Pen(picColor.BackColor, width);
 
             // z.DrawEllipse(p, -1f, -1f, 2f, 2f);  //Kreis zum testen
             int edges = Convert.ToInt32(cbEcken.SelectedItem);
@@ -70,10 +72,10 @@ namespace SWE_PP_Bsp3_Polygon
             else
             {
                 //alle Ecken durchgehen(bis auf die letzte)
-                for(int i= 1; i < edges; i++)
+                for (int i = 1; i < edges; i++)
                 {
                     //nun alle linien zu folge ecken zeichnen
-                    for(int j = i+1; j <= edges; j++)
+                    for (int j = i + 1; j <= edges; j++)
                     {
                         w1 = i * w;
                         w2 = j * w;
@@ -94,6 +96,23 @@ namespace SWE_PP_Bsp3_Polygon
         private void pic_Resize(object sender, EventArgs e)
         {
             pic.Invalidate();
+        }
+
+        private void btnColor_Click(object sender, EventArgs e)
+        {
+            if (cdColor.ShowDialog() == DialogResult.OK)
+            {
+                picColor.BackColor = cdColor.Color;
+                pic.Invalidate();
+            }
+        }
+
+        private void btLine_Click(object sender, EventArgs e)
+        {
+            double w = double.Parse(tbWidth.Text);
+            width = (float)w; 
+            pic.Invalidate(); 
+
         }
     }
 }
